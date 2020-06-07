@@ -200,13 +200,9 @@ class Filter extends SQLFilter
             MultiTenancy::class,
         );
 
-        // We get null if the annotation hasn't been defined. That's an issue since, for security
-        // reasons, we want to ensure that the entity has explicitly been disabled for multi-tenancy.
+        // No need for entites /wo annotation
         if (!$multiTenancy instanceof MultiTenancy) {
-            throw new \LogicException(sprintf(
-                '%s must have the MultiTenancy annotation added to the class docblock.',
-                $targetEntity->rootEntityName,
-            ));
+            return '';
         }
 
         if (!$multiTenancy->isEnabled()) {
